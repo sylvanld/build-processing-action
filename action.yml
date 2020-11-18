@@ -19,7 +19,7 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Install processing version ${{ inputs.processing_version }}
+    - name: Install processing version ${{ inputs.processing_version }}.
       run: |
         wget -q https://download.processing.org/processing-${{ inputs.processing_version }}-linux64.tgz
         tar -xzf processing-${{ inputs.processing_version }}-linux64.tgz
@@ -27,10 +27,13 @@ runs:
         echo "Processing ${{ inputs.processing_version }} installed successfully!"
       shell: bash
 
-    - name: Build and compress distribuables...
-      run: ${{ github.action_path }}/build-and-compress.sh 
-      env:
-        SKETCH: ${{ inputs.sketch }}
-        PLATFORMS: ${{ inputs.target_platforms }}
-        PROCESSING: ./processing-${{ inputs.processing_version }}/processing-java
+    - name: Build and compress distribuable in-place.
+      run: |
+        ./processing-${{ inputs.processing_version }}/processing-java --sketch=${{ inputs.sketch }}/ --export && echo "Distribuable built for platform ${{ inputs.target_platform }}."
+      shell: bash
+
+    - name: Compress distribuable for platform ${{ inputs.sketch }}.
+      run: |
+        mkdir -p ./artifacts
+        zip -qr ./artifacts/${{ inputs.target_platform }}.zip ./${{ inputs.sketch }}/application.${{ inputs.target_platform }}/* && echo Successfully zipped ${{ inputs.target_platform }} distribuable.
       shell: bash

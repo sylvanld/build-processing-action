@@ -1,0 +1,7 @@
+name: 'Build processing action'
+description: 'Action to build processing sketch and host artifact under GitHub release'  
+runs:
+  using: "composite"
+  steps: 
+    - run: ${{ github.action_path }}/build-and-compress.sh
+      shell: bash

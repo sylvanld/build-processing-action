@@ -2,6 +2,10 @@ name: 'Build processing action'
 description: 'Action to build processing sketch and host artifact under GitHub release'  
 
 inputs:
+  sketch:
+    description: 'Name of the sketch to export'
+    required: true
+  
   processing_version:
     description: 'Processing language version used to built sketches'
     required: false
@@ -14,10 +18,22 @@ inputs:
 
 runs:
   using: "composite"
-  steps:      
+  steps: 
+    - run: echo ${{ inputs.processing_version }}
+      shell: bash
+    
+    - run: echo ${{ inputs.target_platform }}
+      shell: bash
+      
     - run: |
-        mkdir -p ./processing
-        wget -qO- https://download.processing.org/processing-${{ inputs.processing_version }}-linux64.tgz | tar xvz -
+        wget -qO- https://download.processing.org/processing-${{ inputs.processing_version }}-linux64.tgz
+        tar -xzf processing-${{ inputs.processing_version }}-linux64.tgz
+        rm processing-${{ inputs.processing_version }}-linux64.tgz
         ./processing-${{ inputs.processing_version }}/processing-java --help
+      shell: bash
+
+    - run: |
+        mkdir -p ./artifacts
+        ./processing-${{ inputs.processing_version }}/processing-java --sketch=${{ inputs.sketch }}/ --output=./artifacts/${{ inputs.target_platform }} --export --platforms=${{ inputs.target_platform }}
       shell: bash
     

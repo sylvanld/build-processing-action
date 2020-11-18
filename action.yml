@@ -2,15 +2,21 @@ name: 'Build processing action'
 description: 'Action to build processing sketch and host artifact under GitHub release'  
 
 inputs:
-  targets:
-    description: 'Targeted platforms'
+  processing_version:
+    description: 'Processing language version used to built sketches'
+    required: false
+    default: 3.5.4
+  
+  target_platform:
+    description: 'Targeted platform'
     required: true
-    default:
-      - windows64
-      - linux64
+    default: linux64
 
 runs:
   using: "composite"
   steps: 
-    - run: ${{ github.action_path }}/build-and-compress.sh
+    - run: echo ${{ inputs.processing_version }}
+      shell: bash
+    
+    - run: echo ${{ inputs.target_platform }}
       shell: bash

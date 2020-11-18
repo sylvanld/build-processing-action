@@ -17,7 +17,7 @@ runs:
   steps:      
     - run: |
         mkdir -p ./processing
-        wget -qO- https://download.processing.org/processing-${{ inputs.processing_version }}-linux64.tgz | tar xvz - -C ./processing
-        ./processing/processing-${{ inputs.processing_version }}/processing-java --help
+        wget -qO- https://download.processing.org/processing-${{ inputs.processing_version }}-linux64.tgz | tar xvz -
+        ./processing-${{ inputs.processing_version }}/processing-java --help
       shell: bash
     

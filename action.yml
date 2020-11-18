@@ -26,7 +26,7 @@ runs:
       shell: bash
       
     - run: |
-        wget -qO- https://download.processing.org/processing-${{ inputs.processing_version }}-linux64.tgz
+        wget -q https://download.processing.org/processing-${{ inputs.processing_version }}-linux64.tgz
         tar -xzf processing-${{ inputs.processing_version }}-linux64.tgz
         rm processing-${{ inputs.processing_version }}-linux64.tgz
         ./processing-${{ inputs.processing_version }}/processing-java --help

@@ -1,5 +1,14 @@
 name: 'Build processing action'
 description: 'Action to build processing sketch and host artifact under GitHub release'  
+
+inputs:
+  targets:
+    description: 'Targeted platforms'
+    required: true
+    default:
+      - windows64
+      - linux64
+
 runs:
   using: "composite"
   steps: 

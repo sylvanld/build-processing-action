@@ -14,18 +14,10 @@ inputs:
 
 runs:
   using: "composite"
-  steps: 
-    - run: echo ${{ inputs.processing_version }}
-      shell: bash
-    
-    - run: echo ${{ inputs.target_platform }}
-      shell: bash
-      
-    - name: Install processing version ${{ inputs.processing_version }}
-      run: |
-        wget https://download.processing.org/processing-${{ inputs.processing_version }}-linux64.tgz
+  steps:      
+    - run: |
         mkdir -p ./processing
-        tar xf processing-${{ inputs.processing_version }}-linux64.tgz -C ./processing
+        wget -qO- https://download.processing.org/processing-${{ inputs.processing_version }}-linux64.tgz | tar xvz - -C ./processing
         ./processing/processing-${{ inputs.processing_version }}/processing-java --help
       shell: bash
     

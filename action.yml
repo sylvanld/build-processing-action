@@ -33,7 +33,13 @@ runs:
       shell: bash
 
     - run: |
-        mkdir -p ./artifacts
-        ./processing-${{ inputs.processing_version }}/processing-java --sketch=${{ inputs.sketch }}/ --output=./artifacts/${{ inputs.target_platform }} --export --platforms=${{ inputs.target_platform }}
+        mkdir -p ./dist
+        ./processing-${{ inputs.processing_version }}/processing-java --sketch=${{ inputs.sketch }}/ --output=./dist/${{ inputs.target_platform }} --export --platforms=${{ inputs.target_platform }}
       shell: bash
+
+    - run: |
+        mkdir -p ./artifacts
+        zip -qr ./artifacts/${{ inputs.target_platform }}.zip ./dist/${{ inputs.target_platform }} && echo Successfully zipped ${{ inputs.target_platform }} distribuable.
+        ls ./artifacts/
+    
     

@@ -41,5 +41,6 @@ runs:
         mkdir -p ./artifacts
         zip -qr ./artifacts/${{ inputs.target_platform }}.zip ./dist/${{ inputs.target_platform }} && echo Successfully zipped ${{ inputs.target_platform }} distribuable.
         ls ./artifacts/
+      shell: bash
     
     

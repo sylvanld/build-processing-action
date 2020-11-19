@@ -31,6 +31,8 @@ runs:
         echo Build and compress distribuable in-place.
         echo ./processing-${{ inputs.processing_version }}/processing-java --sketch=${{ inputs.sketch }}/ --export
         ./processing-${{ inputs.processing_version }}/processing-java --sketch=${{ inputs.sketch }}/ --export || echo "Distribuable built for platform ${{ inputs.target_platform }}."
+        echo built files
+        ls ${{ inputs.sketch }}/
       shell: bash
 
     - run: |

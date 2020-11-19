@@ -24,20 +24,23 @@ runs:
         wget -q https://download.processing.org/processing-${{ inputs.processing_version }}-linux64.tgz
         tar -xzf processing-${{ inputs.processing_version }}-linux64.tgz
         rm processing-${{ inputs.processing_version }}-linux64.tgz
-        cd processing-${{ inputs.processing_version }} && sudo ./install.sh && cd ..
         echo "Processing ${{ inputs.processing_version }} installed successfully!"
+        processing-${{ inputs.processing_version }}/processing-java --help
       shell: bash
 
     - run: |
         echo Build and compress distribuable in-place.
         echo ${PWD}/processing-${{ inputs.processing_version }}/processing-java --sketch=${PWD}/${{ inputs.sketch }}/ --export
-        ${PWD}/processing-${{ inputs.processing_version }}/processing-java --sketch=${PWD}/${{ inputs.sketch }}/ --export
+        processing-${{ inputs.processing_version }}/processing-java --sketch=${{ inputs.sketch }}/ --output=/tmp/${{ inputs.sketch }}/ --force --platform=${{ inputs.target_platform }} --export
         echo built files
-        ls ${{ inputs.sketch }}/
+        ls /tmp/${{ inputs.sketch }}/
       shell: bash
 
     - run: |
         echo Compress distribuable for platform ${{ inputs.sketch }}.
         mkdir -p ./artifacts
-        zip -qr ./artifacts/${{ inputs.target_platform }}.zip ./${{ inputs.sketch }}/application.${{ inputs.target_platform }}/* && echo Successfully zipped ${{ inputs.target_platform }} distribuable.
+        cd /tmp/${{ inputs.sketch }}/
+        zip -qr /tmp/${{ inputs.sketch }}.zip ./dist/* && echo Successfully zipped ${{ inputs.target_platform }} distribuable.
+        cd -
+        mv /tmp/${{ inputs.sketch }}.zip ./artifacts/${{ inputs.target_platform }}.zip
       shell: bash

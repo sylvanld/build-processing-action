@@ -17,7 +17,7 @@ inputs:
     default: linux64
 
 outputs:
-  artifact: 
+  artifact_path: 
     description: "Path to zip file containing distribuable build for given platform."
     value: ./artifacts/${{ inputs.sketch }}-${{ inputs.target_platform }}.zip
 

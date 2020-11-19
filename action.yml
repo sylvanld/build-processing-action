@@ -30,7 +30,7 @@ runs:
     - run: |
         echo Build and compress distribuable in-place.
         echo ${PWD}/processing-${{ inputs.processing_version }}/processing-java --sketch=${PWD}/${{ inputs.sketch }}/ --export
-        ./processing-${{ inputs.processing_version }}/processing-java --sketch=${PWD}/${{ inputs.sketch }}/ --export
+        ${PWD}/processing-${{ inputs.processing_version }}/processing-java --sketch=${PWD}/${{ inputs.sketch }}/ --export
         echo built files
         ls ${{ inputs.sketch }}/
       shell: bash

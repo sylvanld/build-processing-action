@@ -16,6 +16,11 @@ inputs:
     required: true
     default: linux64
 
+outputs:
+  artifact: 
+    description: "Path to zip file containing distribuable build for given platform."
+    value: ./artifacts/${{ inputs.sketch }}-${{ inputs.target_platform }}.zip
+
 runs:
   using: "composite"
   steps:
@@ -42,5 +47,5 @@ runs:
         cd /tmp/
         zip -qr /tmp/${{ inputs.sketch }}.zip ${{ inputs.sketch }}/* && echo Successfully zipped ${{ inputs.target_platform }} distribuable.
         cd -
-        mv /tmp/${{ inputs.sketch }}.zip ./artifacts/${{ inputs.target_platform }}.zip
+        mv /tmp/${{ inputs.sketch }}.zip ./artifacts/${{ inputs.sketch }}-${{ inputs.target_platform }}.zip
       shell: bash

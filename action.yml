@@ -39,8 +39,9 @@ runs:
     - run: |
         echo Compress distribuable for platform ${{ inputs.sketch }}.
         mkdir -p ./artifacts
+        mv dist /tmp/${{ inputs.sketch }}
         cd /tmp/${{ inputs.sketch }}/
-        zip -qr /tmp/${{ inputs.sketch }}.zip ./dist/* && echo Successfully zipped ${{ inputs.target_platform }} distribuable.
+        zip -qr /tmp/${{ inputs.sketch }}.zip ./* && echo Successfully zipped ${{ inputs.target_platform }} distribuable.
         cd -
         mv /tmp/${{ inputs.sketch }}.zip ./artifacts/${{ inputs.target_platform }}.zip
       shell: bash
